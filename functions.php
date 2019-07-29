@@ -67,4 +67,4 @@ add_action("pre_get_posts", "university_adjust_queries");
 
 
 
-add_filter("acf/fields/google_map/api", "universityMapKey");
+// add_filter("acf/fields/google_map/api", "universityMapKey");

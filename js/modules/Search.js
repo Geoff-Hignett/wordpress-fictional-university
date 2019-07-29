@@ -18,11 +18,30 @@ class Search {
     this.searchField.on('keydown', this.typingLogic.bind(this));
   }
 
-  typingLogic() {
-    clearTimeout(this.typingTimer);
-    this.typingTimer = setTimeout(function() {
-      console.log('test');
-    }, 2000);
+  getResults() {
+    $.getJSON(
+      'http://localhost:3000/wp-json/wp/v2/posts?search=biology' +
+        this.searchField.val(),
+      function(posts) {
+        var testArray = ['red', 'orange', 'yellow'];
+        this.resultsDiv.html(`
+          <h2 class="search-overlay__section-title">General Information</h2>
+          ${
+            posts.length
+              ? '<ul class="link-list min-list">'
+              : '<p>No general information matches that search.</p>'
+          }
+            ${posts
+              .map(
+                item =>
+                  `<li><a href="${item.link}">${item.title.rendered}</a></li>`
+              )
+              .join('')}
+          </ul>
+          
+        `);
+      }
+    );
   }
 
   keyPressDispatcher(e) {
